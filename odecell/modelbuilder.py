@@ -1,3 +1,6 @@
+#######################################
+### modelbuilder Module Description ###
+#######################################
 """
 .. module:: desolver
    :platform: Unix
@@ -7,6 +10,9 @@
 
 """
 
+###################################
+### Importing Necessary Modules ###
+###################################
 import types, csv, collections, sys
 from scipy import integrate
 from string import Template
@@ -15,20 +21,25 @@ from functools import reduce
 import cobra
 from pickle import load, dump
 
-######################
-### RateForm Class ###
-######################
+###################################
+### Constructing RateForm Class ###
+###################################
 class RateForm():
     """
-    Base class for defining rate forms.
+    This class is the base class for defining kinetic rate forms (i.e., chemical kinetic equations).
 
     This class allows one to define new rate forms and automates the creation
     of specific strings defining a reaction law. The laws can then be combined
-    to form a kinetic model. This 
+    to form a kinetic model. This class is 
+
+    
+    
     """
+
+    ### Defining Class Initializer Method ###
     def __init__(self, newbase = "$Vmax * $Sub1 /($Km + $Sub1)"):
         """ 
-        Constructor of the class.
+        Initializer method for the RateForm class.
         
         Sets the rate from for the newly created object and produces a
         set containing all keys in the rate form.
@@ -41,7 +52,8 @@ class RateForm():
             none
         
         """
-        
+
+        # Test whether 
         if isinstance(newbase, RateForm):
             newbase = newbase.getBaseRate()
         
