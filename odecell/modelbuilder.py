@@ -15,15 +15,20 @@ from functools import reduce
 import cobra
 from pickle import load, dump
 
-## Base class for defining rate forms.
-#
-# This class allows one to define new rate forms and automates the creation
-# of specific strings defining a reaction law. The laws can then be combined
-# to form a kinetic model.
+######################
+### RateForm Class ###
+######################
 class RateForm():
-    
+    """
+    Base class for defining rate forms.
+
+    This class allows one to define new rate forms and automates the creation
+    of specific strings defining a reaction law. The laws can then be combined
+    to form a kinetic model. This 
+    """
     def __init__(self, newbase = "$Vmax * $Sub1 /($Km + $Sub1)"):
-        """ Constructor of the class.
+        """ 
+        Constructor of the class.
         
         Sets the rate from for the newly created object and produces a
         set containing all keys in the rate form.
