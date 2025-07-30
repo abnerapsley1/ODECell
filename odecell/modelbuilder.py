@@ -30,9 +30,14 @@ class RateForm():
 
     This class allows one to define new rate forms and automates the creation
     of specific strings defining a reaction law. The laws can then be combined
-    to form a kinetic model. This class is 
+    to form a kinetic model. This class is used in the creation of the MetabolicModel
+    class which is defined below.
 
-    
+    Attributes:
+       Attribute1 (): 
+
+    Methods: 
+       Method1: 
     
     """
 
