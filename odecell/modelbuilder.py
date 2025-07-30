@@ -63,6 +63,7 @@ class RateForm():
         set containing all keys in the rate form.
         
         Args:
+            self (RateForm): Object pointer.
             newbase (string or RateForm): If string, it must be the template string 
                 defining the form of the new type of rate. If another rate
                 form object, its template string will be copied to the current object.
@@ -102,6 +103,7 @@ class RateForm():
         If two RateForm objects have the same __dict__ attributes, they are considered equal.
 
         Args:
+           self (RateForm): Object pointer.
            other (RateForm): Another object of class RateForm to compare to the present object.
 
         Returns (boolean):
@@ -113,7 +115,21 @@ class RateForm():
     ## Returns the template form of this type of rate.
     # 
     # @param self The object pointer.
+    ### Defining Class getBaseRate Method ###
     def getBaseRate(self):
+        """
+        Defining the getBaseRate method
+
+        This method is for the purpose of returning the template rate form that was 
+        input by the user when initializing a RateForm object.
+
+        Args:
+           self (RateForm): Object pointer.
+
+        Returns (string.template): 
+           The template for the new rate law defined as "newbase" in __init__.
+           
+        """
         return self.__baseRateTemplate.template
     
     ### Replaces identifiers with user-supplied values and returns a string.
