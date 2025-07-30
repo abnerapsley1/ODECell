@@ -305,11 +305,11 @@ class Metabolite():
         __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): A dunder method that 
             initializes the instance of the class object.
         __str__(self): A dunder method that defines the Metabolite class "str()" behavior.
-        getName(self):
-        getID(self):
-        getFBAID(self):
-        setMode(self, newMode):
-        getMode(self, ):
+        getName(self): A method to return the metabolite object __name attribute.
+        getID(self): A method to return the metabolite object __ID attribute.
+        getFBAID(self): A method to return the metabolite object __FBAID attribute.
+        setMode(self, newMode): A method to define the metabolite object's __mode attribute.
+        getMode(self, ): A method to return the metabolite object __mode attribute.
         addReaction(self, ):
         rmReaction(self, ):
         getReactions(self, ):
@@ -415,7 +415,7 @@ class Metabolite():
         """
         Gets the name of the metabolite object.
 
-        This method accesses and return the __name attribute of the metabolite object.
+        This method accesses and returns the __name attribute of the metabolite object.
 
         Args:
             self (Metabolite): Object pointer.
@@ -424,7 +424,6 @@ class Metabolite():
             The __name attribute of the metabolite object.
             
         """
-        
         return self.__name
 
     ### Define Class getID Method ###
@@ -432,7 +431,7 @@ class Metabolite():
         """
         Gets the ID of the metabolite object.
 
-        This method accesses and return the __ID attribute of the metabolite object.
+        This method accesses and returns the __ID attribute of the metabolite object.
 
         Args:
             self (Metabolite): Object pointer.
@@ -441,7 +440,6 @@ class Metabolite():
             The __ID attribute of the metabolite object.
            
         """
-        
         return self.__ID
 
     ### Define Class getFBAID Method ###
@@ -449,7 +447,7 @@ class Metabolite():
         """
         Gets the FBAID of the metabolite object.
 
-        This method accesses and return the __FBAID attribute of the metabolite object.
+        This method accesses and returns the __FBAID attribute of the metabolite object.
 
         Args:
             self (Metabolite): Object pointer.
@@ -458,7 +456,6 @@ class Metabolite():
             The __FBAID attribute of the metabolite object.
             
         """
-        
         return self.__FBAID
 
     ### Define Class setMode Method ###
@@ -470,29 +467,83 @@ class Metabolite():
 
         Args:
             self (Metabolite): Object pointer.
-            newMode (string): 
+            newMode (string): REQUIRED, a string specifying the __mode of the 
+                metabolite object.
 
         Returns:
             none
             
         """
-        
         self.__mode = newMode
 
     ### Define Class getMode Method ###
     def getMode(self):
+        """
+        Gets the mode of the metabolite object.
+
+        This method accesses and returns the __mode attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (string):
+            The __mode attribute of the metabolite object.
+            
+        """
         return self.__mode
 
     ### Define Class addReaction Method ###
     def addReaction(self, rxnIndx):
+        """
+        Adds a reaction in which the metabolite object participates.
+
+        This method appends the __rxnSet attribute by adding an additional reaction
+        that is associated with the new metabolite.
+
+        Args:
+            self (Metabolite): Object pointer.
+            rxnIndx (string): REQUIRED, a string specifying the reaction ID to associate
+                with the new metabolite (see Class Reaction for details on this parameter).
+
+        Returns:
+            none
+            
+        """
         self.__rxnSet.add(rxnIndx)
 
     ### Define Class rmReaction Method ###
     def rmReaction(self, rxnIndx):
+        """
+        Removes a reaction in which the metabolite object participates.
+
+        This method shortens the __rxnSet attribute by removing a specified reaction
+        that is already associated with the metabolite.
+
+        Args:
+            self (Metabolite): Object pointer.
+            rxnIndx (string): REQUIRED, a string specifying the reaction ID to remove
+                from the new metabolite (see Class Reaction for details on this parameter).
+
+        Returns:
+            none
+            
+        """
         self.__rxnSet.remove(rxnIndx)
 
     ### Define Class getReactions Method ###
     def getReactions(self):
+        """
+        Gets the set of reactions in which the metabolite object participates.
+
+        This method accesses and returns the __rxnSet attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (set):
+            The __rxnSet attribute of the metabolite object.
+            
+        """
         return self.__rxnSet
 
     ### Define Class addDependMet Method ###
@@ -501,14 +552,51 @@ class Metabolite():
 
     ### Define Class getDependMets Method ###
     def getDependMets(self):
+        """
+        Gets the dependent metabolites of the metabolite object.
+
+        This method accesses and returns the __dependentMets 
+            attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (set):
+            The __dependentMets attribute of the metabolite object.
+            
+        """
         return self.__dependentMets
 
     ### Define Class getInitVal Method ###
     def getInitVal(self):
+        """
+        Gets the initial abundance of the metabolite object.
+
+        This method accesses and returns the __initVal attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (float):
+            The __initVal attribute of the metabolite object.
+            
+        """
         return self.__initVal
 
     ### Define Class getCurrVal Method ###
     def getCurrVal(self):
+        """
+        Gets the current abundance of the metabolite object.
+
+        This method accesses and returns the __currVal attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (float):
+            The __currVal attribute of the metabolite object.
+            
+        """
         return self.__currVal
 
     ### Define Class setInitVal Method ###
@@ -525,6 +613,18 @@ class Metabolite():
 
     ### Define Class getConnFlux Method ###
     def getConnFlux(self):
+        """
+        Gets the FBA connection fluxes of the metabolite object.
+
+        This method accesses and returns the __connFlux attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (float):
+            The __connFlux attribute of the metabolite object.
+            
+        """
         return self.__connFlux
 
     ### Define Class clearConnections Method ###
@@ -543,6 +643,18 @@ class Metabolite():
 
     ### Define Class getConnRxns Method ###
     def getConnRxns(self):
+        """
+        Gets the FBA reactions in which the metabolite object participates.
+
+        This method accesses and returns the __connRxns attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (list):
+            The __connRxns attribute of the metabolite object.
+            
+        """
         return self.__connRxns
 
     ### Define Class calcConnFlux Method ###
@@ -559,7 +671,11 @@ class Metabolite():
             self.__connFlux += connRxn[1]*fbsSolution.x[connRxn[0]]
         
         return(0)
-    
+
+
+###################################
+### Constructing Reaction Class ###
+###################################
 class Reaction():
     
     ## Constructor for class Reaction
