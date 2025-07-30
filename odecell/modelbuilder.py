@@ -52,12 +52,13 @@ class RateForm():
        __eq__(self, other): A dunder method that defines the RateForm class "==" behavior.
        getBaseRate(self): This is a method that returns the base rate template (defined as 
           "newbase" in __init__).
+       getRate(self, subsDict): This is a method that returns the key-substituted new rate
+          form (i.e., the keys are replaced by their dictionary-defined values).
           
-    
     """
 
     ### Defining Class Initializer Method ###
-    def __init__(self, newbase = "$Vmax * $Sub1 /($Km + $Sub1)"):
+    def __init__(self, newbase = "${Vmax} * ${Sub1} /(${Km} + ${Sub1})"):
         """ 
         Initializer method for the RateForm class.
         
@@ -118,7 +119,7 @@ class RateForm():
     ### Defining Class getBaseRate Method ###
     def getBaseRate(self):
         """
-        Defining the getBaseRate method
+        Gets the new rate form template.
 
         This method is for the purpose of returning the template rate form that was 
         input by the user when initializing a RateForm object.
@@ -131,15 +132,24 @@ class RateForm():
            
         """
         return self.__baseRateTemplate.template
-    
-    ### Replaces identifiers with user-supplied values and returns a string.
-    #
-    # This function uses a dictionary of parameter values and substrate names
-    # to substitute the identifiers in the template reaction form, returning 
-    # a string with the rate for a specific reaction.
-    # @param self The object pointer.
-    # @param subsDict The dictionary with parameter values and metabolite names.
+
+   
+    ### Defining Class getRate Method ###
     def getRate(self, subsDict):
+        """
+        Gets template-substituted new rate form.
+        
+        Replaces identifiers (strings with the ${}-based syntax) in the rate law 
+        (defined as "newbase" in __init__) with user-supplied values. 
+
+        Args:
+           self (RateForm): Object pointer.
+           subsDict (): The dictionary with parameter values and metabolite names.
+
+        Returns (string):
+           New rate form with substituted values for each rate form key.
+      
+        """
         return self.__baseRateTemplate.substitute(subsDict)
     
     ## Returns the set of keys for the rate form.
