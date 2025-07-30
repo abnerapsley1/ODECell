@@ -54,6 +54,10 @@ class RateForm():
           "newbase" in __init__).
        getRate(self, subsDict): This is a method that returns the key-substituted new rate
           form (i.e., the keys are replaced by their dictionary-defined values).
+       getKeys(self): This is a method that returns a set of the variables that are considered "keys" in
+          the new rate form. Keys are defined as variables with $-based syntax and are later 
+          substituted for user-defined values.
+       setGradComp(self, key, form):
           
     """
 
@@ -152,13 +156,36 @@ class RateForm():
         """
         return self.__baseRateTemplate.substitute(subsDict)
     
-    ## Returns the set of keys for the rate form.
+    ## Returns .
     # 
     # @param self The object pointer.
+    ### Defining Class getKeys Method ###
     def getKeys(self):
+        """
+        Gets keys (i.e., the variables to be substituted by user-defined values) from new rate law.
+
+        This is a simple method to print the keys from the newly defined rate form.
+        The keys are defined in the __init__ method as strings with the ${}-based syntax.
+        For example, if the new rate form is "${Vmax} * ${Sub1} /(${Km} + ${Sub1})",
+        the keys will be "Vmax", "Sub1", and "Km".
+
+        Args:
+           self (RateForm): Object pointer.
+
+        Returns (set):
+           The set of keys for the new rate form.
+           
+        """
         return self.__keySet
-    
+
+    ### Define Class setGradComp Method ###
     def setGradComp(self, key, form):
+        """
+        Defines the gradients (partial derivatives) for each key.
+
+        This method populates the "__gradDict" attribute with information on the partial
+        derivatives for each key variable in the new rate form.
+        """
         self.__gradDict[Template(key)] = Template(form)
     
     def getGradDict(self, subsDict):
