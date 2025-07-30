@@ -182,7 +182,8 @@ class RateForm():
         Defines the gradients (partial derivatives) for each key.
 
         This method populates the "__gradDict" attribute with information on the partial
-        derivatives for each key variable in the new rate form.
+        derivatives for each key variable in the new rate form. This function should
+        be run once for every key-gradient pair individually.
 
         Args:
            self (RateForm): Object pointer.
