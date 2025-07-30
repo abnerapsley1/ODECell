@@ -305,10 +305,10 @@ class Metabolite():
         __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): A dunder method that 
             initializes the instance of the class object.
         __str__(self): A dunder method that defines the Metabolite class "str()" behavior.
-        getName(self, ):
-        getID(self, ):
-        getFBAID(self, ):
-        setMode(self, ):
+        getName(self):
+        getID(self):
+        getFBAID(self):
+        setMode(self, newMode):
         getMode(self, ):
         addReaction(self, ):
         rmReaction(self, ):
@@ -327,6 +327,7 @@ class Metabolite():
         calcConFlux(self, ):
        
     """
+
     
     ### Defining Class Initializer Method ###
     def __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""):
@@ -338,7 +339,7 @@ class Metabolite():
         Args:
             self (Metabolite): Object pointer.
             metID (string): REQUIRED, a string representing the shortened version of the metabolite
-               name. For example, "Glc" for the metabolite glucose.
+                name. For example, "Glc" for the metabolite glucose.
             metName (string): The full metabolite name. For example "glucose".
             initVal (float): A number indicating the initial abundance of the metabolite (counts, uM???).
             fbaMetID (string): The ID used in an FBA model connected to the ODE model
@@ -379,7 +380,6 @@ class Metabolite():
         # Define the __dependentMets attribute as an empty set #
         self.__dependentMets = set()
 
-   
     ### Defining Class __str__ Method ###
     def __str__(self):
         """
@@ -401,63 +401,133 @@ class Metabolite():
         # Define returnStr as the metabolite, name and current abundance #
         returnStr = self.__ID + ": " + self.__name + \
             ", Concentration: " + str(self.__currVal) + "\n"
-        # 
+        # Determine if metabolite has any reactions in __rxnSet attribute and print them #
         if len(self.__rxnSet) > 0:
             returnStr += "Metabolite associated with reaction(s) " + \
                 str(self.__rxnSet)
+        # If metabolite participates in no reactions, print the following message: #
         else :
             returnStr += "Metabolite not associated with any reactions."
         return returnStr
     
-    # Metabolite Name
+    ### Define Class getName Method ###
     def getName(self):
+        """
+        Gets the name of the metabolite object.
+
+        This method accesses and return the __name attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (string):
+            The __name attribute of the metabolite object.
+            
+        """
+        
         return self.__name
-    
+
+    ### Define Class getID Method ###
     def getID(self):
+        """
+        Gets the ID of the metabolite object.
+
+        This method accesses and return the __ID attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (string):
+            The __ID attribute of the metabolite object.
+           
+        """
+        
         return self.__ID
-    
+
+    ### Define Class getFBAID Method ###
     def getFBAID(self):
+        """
+        Gets the FBAID of the metabolite object.
+
+        This method accesses and return the __FBAID attribute of the metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (string):
+            The __FBAID attribute of the metabolite object.
+            
+        """
+        
         return self.__FBAID
-    
+
+    ### Define Class setMode Method ###
     def setMode(self, newMode):
+        """
+        Sets the mode of the metabolite object.
+
+        This method defines the __mode attribute for a metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+            newMode (string): 
+
+        Returns:
+            none
+            
+        """
+        
         self.__mode = newMode
-    
+
+    ### Define Class getMode Method ###
     def getMode(self):
         return self.__mode
-    
+
+    ### Define Class addReaction Method ###
     def addReaction(self, rxnIndx):
         self.__rxnSet.add(rxnIndx)
-    
+
+    ### Define Class rmReaction Method ###
     def rmReaction(self, rxnIndx):
         self.__rxnSet.remove(rxnIndx)
-    
+
+    ### Define Class getReactions Method ###
     def getReactions(self):
         return self.__rxnSet
-    
+
+    ### Define Class addDependMet Method ###
     def addDependMet(self, met):
         return self.__dependentMets.add(met)
-    
+
+    ### Define Class getDependMets Method ###
     def getDependMets(self):
         return self.__dependentMets
-    
+
+    ### Define Class getInitVal Method ###
     def getInitVal(self):
         return self.__initVal
-    
+
+    ### Define Class getCurrVal Method ###
     def getCurrVal(self):
         return self.__currVal
-    
+
+    ### Define Class setInitVal Method ###
     def setInitVal(self, newVal):
         self.__initVal = newVal
-    
+
+    ### Define Class setCurrVal Method ###
     def setCurrVal(self, newVal):
         self.__currVal = newVal
-    
+
+    ### Define Class setConnFlux Method ###
     def setConnFlux(self, newFlux):
         self.__connFlux = newFlux
-    
+
+    ### Define Class getConnFlux Method ###
     def getConnFlux(self):
         return self.__connFlux
-    
+
+    ### Define Class clearConnections Method ###
     def cleanConnections(self):
         self.__connRxns = []
     
@@ -466,13 +536,16 @@ class Metabolite():
     # @param self The object pointer.
     # @param rxnIndx The index for the connecting reaction,
     # @param rxnStoich The stoichiometry for this metabolite in the reaction.
+    ### Define Class addFBAConnection Method ###
     def addFBAConnection(self, rxnIndx, rxnStoich):
         self.__connRxns.append( (rxnIndx, rxnStoich) )
         return(0)
-    
+
+    ### Define Class getConnRxns Method ###
     def getConnRxns(self):
         return self.__connRxns
-    
+
+    ### Define Class calcConnFlux Method ###
     def calcConnFlux(self, fbsSolution, fbamodel=0):
         
         self.__connFlux = 0
