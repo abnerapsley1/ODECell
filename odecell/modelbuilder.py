@@ -46,7 +46,11 @@ class RateForm():
           to its keys.
 
     Methods: 
-       Method1: 
+       __init__(self, newbase): A dunder method that initializes the instance of the class object.
+       __eq__(self, other): A dunder method that defines the RateForm class "==" behavior.
+       getBaseRate(self): This is a method that returns the base rate template (defined as 
+          "newbase" in __init__).
+          
     
     """
 
@@ -89,9 +93,21 @@ class RateForm():
         for item in Template.pattern.findall(newbase):
             self.__keySet.add(item[1] + item[2])
     
-    # Checks if objects are equal.
-    # __ne__ is implemented by default in Py3 as "not __eq__"
+    
+    ### Defining Class __eq__ Method ###
     def __eq__(self, other): 
+        """
+        Defining the behavior of the RateForm class "==" operator.
+
+        If two RateForm objects have the same __dict__ attributes, they are considered equal.
+
+        Args:
+           other (RateForm): Another object of class RateForm to compare to the present object.
+
+        Returns (boolean):
+           True if "self" and "other" have the same __dict__ attributes.
+           
+        """
         return self.__dict__ == other.__dict__
     
     ## Returns the template form of this type of rate.
