@@ -3,8 +3,8 @@
 #######################################
 """
 .. module:: desolver
-   :platform: Unix
-   :synopsis: The package provides an interface for ODE model building and connecting with an FBA model.
+    :platform: Unix
+    :synopsis: The package provides an interface for ODE model building and connecting with an FBA model.
 
 .. moduleauthor:: Marcelo C. R. Melo <melomcr@gmail.com>
 
@@ -36,42 +36,42 @@ class RateForm():
     class which is defined below.
 
     Initialization Parameters:
-       myObject = odecell.modelbuilder.RateForm(newbase = "${Vmax} * ${Sub1} /(${Km} + ${Sub1})"):
-          newbase (string or RateForm): If string, it must be the template string 
+        myObject = odecell.modelbuilder.RateForm(newbase = "${Vmax} * ${Sub1} /(${Km} + ${Sub1})"):
+            newbase (string or RateForm): If string, it must be the template string 
                 defining the form of the new type of rate. If another rate
                 form object, its template string will be copied to the current object.
                 This is set to be the Michaelis-Menten equation by default.
 
     Attributes:
-       __baseRateTemplate (string.Template): This is an internal attribute that is 
-          defined at initialization from the "newbase" argument. It is of the 
-          string.Template class and holds the new rate form in a format which is a 
-          secure way to perform string substitutions using a $-based syntax.
+        __baseRateTemplate (string.Template): This is an internal attribute that is 
+            defined at initialization from the "newbase" argument. It is of the 
+            string.Template class and holds the new rate form in a format which is a 
+            secure way to perform string substitutions using a $-based syntax.
        __keySet (set): This is an internal attribute that is "defined" (empty) at initialization.
-          It is a set that contains all the user-defined "keys" (i.e., variable names in 
-          the rate form such as "$Vmax", "$Sub1", etc. that are later defined by the user).
-       __gradDict (dictionary): This is an internal attribute that is "defined" (empty)
-          at initialization. This dictionary stores the differentiated rate form with respect
-          to its keys.
+            It is a set that contains all the user-defined "keys" (i.e., variable names in 
+            the rate form such as "$Vmax", "$Sub1", etc. that are later defined by the user).
+        __gradDict (dictionary): This is an internal attribute that is "defined" (empty)
+            at initialization. This dictionary stores the differentiated rate form with respect
+            to its keys.
 
     Methods: 
-       __init__(self, newbase): A dunder method that initializes the instance of the class object.
-       __eq__(self, other): A dunder method that defines the RateForm class "==" behavior.
-       getBaseRate(self): This is a method that returns the base rate template (defined as 
-          "newbase" in __init__).
-       getRate(self, subsDict): This is a method that returns the key-substituted new rate
-          form (i.e., the keys are replaced by their dictionary-defined values).
-       getKeys(self): This is a method that returns a set of the variables that are considered "keys" in
-          the new rate form. Keys are defined as variables with $-based syntax and are later 
-          substituted for user-defined values.
-       setGradComp(self, key, form): This is a method which allows the user to define partial derivatives
-          of the overall new rate form with respect to each key/variable. This is usually done for all 
-          substrates and products of the reaction and is necessary for solving the systems of ODEs over 
-          a defined interval of time.
-       getGradDict(self, subDict): This is a method which returns a dictionary where the entries are 
-          the user-defined keys that have gradients and the values are the gradients of the specified key.
-          This method should only be used after using the setGradComp method.
-          
+        __init__(self, newbase): A dunder method that initializes the instance of the class object.
+        __eq__(self, other): A dunder method that defines the RateForm class "==" behavior.
+        getBaseRate(self): This is a method that returns the base rate template (defined as 
+            "newbase" in __init__).
+        getRate(self, subsDict): This is a method that returns the key-substituted new rate
+            form (i.e., the keys are replaced by their dictionary-defined values).
+        getKeys(self): This is a method that returns a set of the variables that are considered "keys" in
+            the new rate form. Keys are defined as variables with $-based syntax and are later 
+            substituted for user-defined values.
+        setGradComp(self, key, form): This is a method which allows the user to define partial derivatives
+            of the overall new rate form with respect to each key/variable. This is usually done for all 
+            substrates and products of the reaction and is necessary for solving the systems of ODEs over 
+            a defined interval of time.
+        getGradDict(self, subDict): This is a method which returns a dictionary where the entries are 
+            the user-defined keys that have gradients and the values are the gradients of the specified key.
+            This method should only be used after using the setGradComp method.
+
     """
 
     ### Defining Class Initializer Method ###
@@ -123,11 +123,11 @@ class RateForm():
         If two RateForm objects have the same __dict__ attributes, they are considered equal.
 
         Args:
-           self (RateForm): Object pointer.
-           other (RateForm): REQUIRED, another object of class RateForm to compare to the present object.
+            self (RateForm): Object pointer.
+            other (RateForm): REQUIRED, another object of class RateForm to compare to the present object.
 
         Returns (boolean):
-           True if "self" and "other" have the same __dict__ attributes, otherwise False.
+            True if "self" and "other" have the same __dict__ attributes, otherwise False.
            
         """
         return self.__dict__ == other.__dict__
@@ -142,10 +142,10 @@ class RateForm():
         input by the user when initializing a RateForm object.
 
         Args:
-           self (RateForm): Object pointer.
+            self (RateForm): Object pointer.
 
         Returns (string.template): 
-           The template for the new rate law defined as "newbase" in __init__.
+            The template for the new rate law defined as "newbase" in __init__.
            
         """
         return self.__baseRateTemplate.template
@@ -160,13 +160,13 @@ class RateForm():
         (defined as "newbase" in __init__) with user-supplied values. 
 
         Args:
-           self (RateForm): Object pointer.
-           subsDict (dictionary): REQUIRED, a dictionary object in which each of the entries are named 
-              after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
-              for each entry are user-defined values for substitution of the keys.
+            self (RateForm): Object pointer.
+            subsDict (dictionary): REQUIRED, a dictionary object in which each of the entries are named 
+                after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
+                for each entry are user-defined values for substitution of the keys.
 
         Returns (string):
-           New rate form with substituted values for each rate form key.
+            New rate form with substituted values for each rate form key.
       
         """
         return self.__baseRateTemplate.substitute(subsDict)
@@ -183,10 +183,10 @@ class RateForm():
         the keys will be "Vmax", "Sub1", and "Km".
 
         Args:
-           self (RateForm): Object pointer.
+            self (RateForm): Object pointer.
 
         Returns (set):
-           The set of keys for the new rate form.
+            The set of keys for the new rate form.
            
         """
         return self.__keySet
@@ -201,18 +201,18 @@ class RateForm():
         be run once for every key-gradient pair individually.
 
         Args:
-           self (RateForm): Object pointer.
-           key (string): REQUIRED, the variable in the new rate form for which the user is specifying 
-              the gradient component. 
-              For example, if the new rate form is "${Vmax} * ${Sub1} /(${Km} + ${Sub1})",
-              and the user wants to specify the gradient with respect to "Sub1", this argument 
-              is simply "${Sub1}".
-           form (string): REQUIRED, the gradient or partial derivative (in $-based syntax) for the 
-              key specified above. For example, if the new rate form is "",
-              this argument should be "${Vmax}/(${Km} + ${Sub1}) - ${Vmax}/((${Km} + ${Sub1})**2)"
+            self (RateForm): Object pointer.
+            key (string): REQUIRED, the variable in the new rate form for which the user is specifying 
+                the gradient component. 
+                For example, if the new rate form is "${Vmax} * ${Sub1} /(${Km} + ${Sub1})",
+                and the user wants to specify the gradient with respect to "Sub1", this argument 
+                is simply "${Sub1}".
+            form (string): REQUIRED, the gradient or partial derivative (in $-based syntax) for the 
+                key specified above. For example, if the new rate form is "",
+                this argument should be "${Vmax}/(${Km} + ${Sub1}) - ${Vmax}/((${Km} + ${Sub1})**2)"
               
         Returns:
-           none
+            none
            
         """
         self.__gradDict[Template(key)] = Template(form)
@@ -226,14 +226,14 @@ class RateForm():
         that have gradients, and the values are the gradients for each key.
 
         Args:
-           self (RateForm): Object pointer.
-           subsDict (dictionary): REQUIRED, a dictionary object in which each of the entries are named 
-              after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
-              for each entry are user-defined values for substitution of the keys.
+            self (RateForm): Object pointer.
+            subsDict (dictionary): REQUIRED, a dictionary object in which each of the entries are named 
+                after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
+                for each entry are user-defined values for substitution of the keys.
 
         Returns (dictionary):
-           A dictionary object with the user-defined gradients for each rate form key that
-           has a defined gradient. Key-substituted values are printed rather than the template.
+            A dictionary object with the user-defined gradients for each rate form key that
+            has a defined gradient. Key-substituted values are printed rather than the template.
            
         """
 
@@ -262,68 +262,69 @@ class Metabolite():
     metabolites, initial abundance, current abundance, FBA fluxes, and FBA connections.
 
     Initialization Parameters:
-       myObject = odecell.modelbuilder.Metabolite(metID, metName = "", initVal = 0, fbaMetID = "", metMode=""):
-          metID (string): REQUIRED, a string representing the shortened version of the metabolite
-             name. For example, "Glc" for the metabolite glucose.
-          metName (string): The full metabolite name. For example "glucose".
-          initVal (float): A number indicating the initial abundance of the metabolite (counts, uM???).
-          fbaMetID (string): The ID used in an FBA model connected to the ODE model
-          metMode (string): ???
+        myObject = odecell.modelbuilder.Metabolite(metID, metName = "", initVal = 0, fbaMetID = "", metMode=""):
+            metID (string): REQUIRED, a string representing the shortened version of the metabolite
+                name. For example, "Glc" for the metabolite glucose.
+            metName (string): The full metabolite name. For example "glucose".
+            initVal (float): A number indicating the initial abundance of the metabolite (counts, uM???).
+            fbaMetID (string): The ID used in an FBA model connected to the ODE model
+            metMode (string): ???
                 
     Attributes:
-       __ID (string): This is an internal attribute that is required as an input when creating an
-          instance of the Metabolite class. This attribute is named from the "metID" class argument.
-          It is a shorthand name for the metabolite.
-       __FBAID (string): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is named from the "fbaMetID" class argument.
-          This attribute specifies the connection between the newly created metabolite object and an 
-          ID connected with an optional FBA model. This attribute defaults to empty.
-       __name (string): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is named from the "metName" class argument.
-          It is the full name for the metabolite. This attribute defaults to empty.
-       __initValue (float): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is defined from the "initVal" class argument.
-          It is a shorthand name for the metabolite. This attribute defaults to 0.
-       __currValue (float): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is defined from the "initVal" class argument.
-          It is a shorthand name for the metabolite. This attribute defaults to 0.
-       __mode (string):???
-       __rxnSet (set): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is "defined" at initialization as an empty set.
-          It represents the list of all reactions in which the new metabolite participates.
-       __connRxns (list): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is "defined" at initialization as an empty list.
-          It represents the list of all reactions in which the new metabolite participates in the FBA model. ???
-       __connFlux (float): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is "defined" at initialization as 0.
-          It represents the concentration flux of the new metabolite in the FBA model. ???
-       __dependentMets (set): This is an internal attribute that is not required as an input when creating an
-          instance of the Metabolite class. This attribute is "defined" at initialization as an empty set.
-          It represents the list of all metabolites that are denendent on the new metabolite.
+        __ID (string): This is an internal attribute that is required as an input when creating an
+            instance of the Metabolite class. This attribute is named from the "metID" class argument.
+            It is a shorthand name for the metabolite.
+        __FBAID (string): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is named from the "fbaMetID" class argument.
+            This attribute specifies the connection between the newly created metabolite object and an 
+            ID connected with an optional FBA model. This attribute defaults to empty.
+        __name (string): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is named from the "metName" class argument.
+            It is the full name for the metabolite. This attribute defaults to empty.
+        __initValue (float): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is defined from the "initVal" class argument.
+            It is a shorthand name for the metabolite. This attribute defaults to 0.
+        __currValue (float): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is defined from the "initVal" class argument.
+            It is a shorthand name for the metabolite. This attribute defaults to 0.
+        __mode (string):???
+        __rxnSet (set): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is "defined" at initialization as an empty set.
+            It represents the list of all reactions in which the new metabolite participates.
+        __connRxns (list): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is "defined" at initialization as an empty list.
+            It represents the list of all reactions in which the new metabolite participates in the FBA model. ???
+        __connFlux (float): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is "defined" at initialization as 0.
+            It represents the concentration flux of the new metabolite in the FBA model. ???
+        __dependentMets (set): This is an internal attribute that is not required as an input when creating an
+            instance of the Metabolite class. This attribute is "defined" at initialization as an empty set.
+            It represents the list of all metabolites that are denendent on the new metabolite.
        
     Methods: 
-       __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): 
-       __str__(self, ): 
-       getName(self, ):
-       getID(self, ):
-       getFBAID(self, ):
-       setMode(self, ):
-       getMode(self, ):
-       addReaction(self, ):
-       rmReaction(self, ):
-       getReactions(self, ):
-       addDependMet(self, ):
-       getDependMets(self, ):
-       getInitValue(self, ):
-       getCurrValue(self, ):
-       setInitValue(self, ):
-       setCurrValue(self, ):
-       setConnFlux(self, ):
-       getConnFlux(self, ):
-       cleanConnections(self, ):
-       addFBAConnection(self, ):
-       getConnRxns(self, ):
-       calcConFlux(self, ):
+        __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): A dunder method that 
+            initializes the instance of the class object.
+        __str__(self): A dunder method that defines the Metabolite class "str()" behavior.
+        getName(self, ):
+        getID(self, ):
+        getFBAID(self, ):
+        setMode(self, ):
+        getMode(self, ):
+        addReaction(self, ):
+        rmReaction(self, ):
+        getReactions(self, ):
+        addDependMet(self, ):
+        getDependMets(self, ):
+        getInitValue(self, ):
+        getCurrValue(self, ):
+        setInitValue(self, ):
+        setCurrValue(self, ):
+        setConnFlux(self, ):
+        getConnFlux(self, ):
+        cleanConnections(self, ):
+        addFBAConnection(self, ):
+        getConnRxns(self, ):
+        calcConFlux(self, ):
        
     """
     
@@ -381,8 +382,26 @@ class Metabolite():
    
     ### Defining Class __str__ Method ###
     def __str__(self):
+        """
+        Defines how the class is printed when called using "str()".
+
+        When probing the contents of an object with class "Metabolite",
+        this function defines how one will see the object. The metabolite class is
+        printed as: 
+            "object.__ID: object.__name, Concentration: object.__currVal".
+            Then if the metabolite has any associated reactions, these are also printed.
+
+        Args:
+            self (Metabolite): Object pointer.
+
+        Returns (string):
+            A string detailing the class object as specified above.
+        """
+
+        # Define returnStr as the metabolite, name and current abundance #
         returnStr = self.__ID + ": " + self.__name + \
             ", Concentration: " + str(self.__currVal) + "\n"
+        # 
         if len(self.__rxnSet) > 0:
             returnStr += "Metabolite associated with reaction(s) " + \
                 str(self.__rxnSet)
