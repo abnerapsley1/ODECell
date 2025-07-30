@@ -124,7 +124,7 @@ class RateForm():
 
         Args:
            self (RateForm): Object pointer.
-           other (RateForm): Another object of class RateForm to compare to the present object.
+           other (RateForm): REQUIRED, another object of class RateForm to compare to the present object.
 
         Returns (boolean):
            True if "self" and "other" have the same __dict__ attributes, otherwise False.
@@ -161,7 +161,9 @@ class RateForm():
 
         Args:
            self (RateForm): Object pointer.
-           subsDict (): The dictionary with parameter values and metabolite names.
+           subsDict (dictionary): REQUIRED, a dictionary object in which each of the entries are named 
+              after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
+              for each entry are user-defined values for substitution of the keys.
 
         Returns (string):
            New rate form with substituted values for each rate form key.
@@ -200,12 +202,12 @@ class RateForm():
 
         Args:
            self (RateForm): Object pointer.
-           key (string): The variable in the new rate form for which the user is specifying 
+           key (string): REQUIRED, the variable in the new rate form for which the user is specifying 
               the gradient component. 
               For example, if the new rate form is "${Vmax} * ${Sub1} /(${Km} + ${Sub1})",
               and the user wants to specify the gradient with respect to "Sub1", this argument 
               is simply "${Sub1}".
-           form (string): The gradient or partial derivative (in $-based syntax) for the 
+           form (string): REQUIRED, the gradient or partial derivative (in $-based syntax) for the 
               key specified above. For example, if the new rate form is "",
               this argument should be "${Vmax}/(${Km} + ${Sub1}) - ${Vmax}/((${Km} + ${Sub1})**2)"
               
@@ -225,7 +227,7 @@ class RateForm():
 
         Args:
            self (RateForm): Object pointer.
-           subsDict (dictionary): A dictionary object in which each of the entries are named 
+           subsDict (dictionary): REQUIRED, a dictionary object in which each of the entries are named 
               after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
               for each entry are user-defined values for substitution of the keys.
 
@@ -263,22 +265,44 @@ class Metabolite():
        myObject = odecell.modelbuilder.Metabolite(metID, metName = "", initVal = 0, fbaMetID = "", metMode=""):
           metID (string): REQUIRED, a string representing the shortened version of the metabolite
              name. For example, "Glc" for the metabolite glucose.
-          metName (string): 
+          metName (string): The full metabolite name. For example "glucose".
+          initVal (float): A number indicating the initial abundance of the metabolite (counts, uM???).
+          fbaMetID (string): The ID used in an FBA model connected to the ODE model
+          metMode (string): ???
                 
     Attributes:
-       __ID (string): dfdf
-       __FBAID (string): dfdf
-       __name (string):
-       __initValue (float):
-       __currValue (float):
-       __mode (string):?
-       __rxnSet ():
-       __connRxns ():
-       __connFlux ():
-       __dependentMets ():
+       __ID (string): This is an internal attribute that is required as an input when creating an
+          instance of the Metabolite class. This attribute is named from the "metID" class argument.
+          It is a shorthand name for the metabolite.
+       __FBAID (string): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is named from the "fbaMetID" class argument.
+          This attribute specifies the connection between the newly created metabolite object and an 
+          ID connected with an optional FBA model. This attribute defaults to empty.
+       __name (string): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is named from the "metName" class argument.
+          It is the full name for the metabolite. This attribute defaults to empty.
+       __initValue (float): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is defined from the "initVal" class argument.
+          It is a shorthand name for the metabolite. This attribute defaults to 0.
+       __currValue (float): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is defined from the "initVal" class argument.
+          It is a shorthand name for the metabolite. This attribute defaults to 0.
+       __mode (string):???
+       __rxnSet (set): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is "defined" at initialization as an empty set.
+          It represents the list of all reactions in which the new metabolite participates.
+       __connRxns (list): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is "defined" at initialization as an empty list.
+          It represents the list of all reactions in which the new metabolite participates in the FBA model. ???
+       __connFlux (float): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is "defined" at initialization as 0.
+          It represents the concentration flux of the new metabolite in the FBA model. ???
+       __dependentMets (set): This is an internal attribute that is not required as an input when creating an
+          instance of the Metabolite class. This attribute is "defined" at initialization as an empty set.
+          It represents the list of all metabolites that are denendent on the new metabolite.
        
     Methods: 
-       __init__(self, ): 
+       __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): 
        __str__(self, ): 
        getName(self, ):
        getID(self, ):
@@ -301,33 +325,61 @@ class Metabolite():
        getConnRxns(self, ):
        calcConFlux(self, ):
        
-          
     """
     
-    ## Constructor for class Metabolite
-    #
-    # @param self The object pointer.
-    # @param metID The ID string for this metabolite.
-    # @param fbaMetID The ID used in an FBA model connected to the ODE model.
-    # @param metName The name string for this metabolite.
-    # @param initVal The value of the initial condition of the metabolite.
+    ### Defining Class Initializer Method ###
     def __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""):
+        """
+        Initializer method for the Metabolite class.
+        
+        Defines a metabolite to be used in subsequent rate forms and metabolite models.
+        
+        Args:
+            self (Metabolite): Object pointer.
+            metID (string): REQUIRED, a string representing the shortened version of the metabolite
+               name. For example, "Glc" for the metabolite glucose.
+            metName (string): The full metabolite name. For example "glucose".
+            initVal (float): A number indicating the initial abundance of the metabolite (counts, uM???).
+            fbaMetID (string): The ID used in an FBA model connected to the ODE model
+            metMode (string): ???
+                
+        Returns:
+            none
+        
+        """
+
+        # Define the __ID attribute as the "metID" input argument #
         self.__ID = metID
+
+        # Define the __FBAID attribute as the "fbaMetID" input argument #
         self.__FBAID = fbaMetID
+
+        # Define the __name attribute as the "metName" input argument #
         self.__name = metName
+
+        # Define the __initVal attribute as the "initVal" input argument #
         self.__initVal = initVal
+
+        # Define the __currVal attribute as the "initVal" input argument #
         self.__currVal = initVal
+
+        # Define the __mode attribute as the "metMode" input argument #
         self.__mode = metMode
         
-        # Set of reactions where the metabolite is used.
+        # Define the __rxnSet attribute as an empty set #
         self.__rxnSet = set()
-        
+
+        # Define the __connRxns attribute as an empty list #
         self.__connRxns = []
-        
+
+        # Define the __connFlux attribute as 0 #
         self.__connFlux = 0
-        
+       
+        # Define the __dependentMets attribute as an empty set #
         self.__dependentMets = set()
-    
+
+   
+    ### Defining Class __str__ Method ###
     def __str__(self):
         returnStr = self.__ID + ": " + self.__name + \
             ", Concentration: " + str(self.__currVal) + "\n"
