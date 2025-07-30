@@ -57,7 +57,13 @@ class RateForm():
        getKeys(self): This is a method that returns a set of the variables that are considered "keys" in
           the new rate form. Keys are defined as variables with $-based syntax and are later 
           substituted for user-defined values.
-       setGradComp(self, key, form):
+       setGradComp(self, key, form): This is a method which allows the user to define partial derivatives
+          of the overall new rate form with respect to each key/variable. This is usually done for all 
+          substrates and products of the reaction and is necessary for solving the systems of ODEs over 
+          a defined interval of time.
+       getGradDict(self, subDict): This is a method which returns a dictionary where the entries are 
+          the user-defined keys that have gradients and the values are the gradients of the specified key.
+          This method should only be used after using the setGradComp method.
           
     """
 
