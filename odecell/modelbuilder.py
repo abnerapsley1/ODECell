@@ -10,9 +10,10 @@
 
 """
 
-###################################
-### Importing Necessary Modules ###
-###################################
+
+##############################################
+### Importing Necessary Additional Modules ###
+##############################################
 import types, csv, collections, sys
 from scipy import integrate
 from string import Template
@@ -20,6 +21,7 @@ from copy import deepcopy
 from functools import reduce
 import cobra
 from pickle import load, dump
+
 
 ###################################
 ### Constructing RateForm Class ###
@@ -111,10 +113,8 @@ class RateForm():
            
         """
         return self.__dict__ == other.__dict__
-    
-    ## Returns the template form of this type of rate.
-    # 
-    # @param self The object pointer.
+
+   
     ### Defining Class getBaseRate Method ###
     def getBaseRate(self):
         """
@@ -179,6 +179,9 @@ class RateForm():
     ##    func(*shortConcentrationsList)
     
 
+#####################################
+### Constructing Metabolite Class ###
+#####################################
 class Metabolite():
     
     ## Constructor for class Metabolite
