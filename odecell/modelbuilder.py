@@ -207,16 +207,31 @@ class RateForm():
         """
         Gets the gradients for each key species in the new rate form.
 
-        This method 
+        This method generates a dictionary where the entries are the user-defined keys
+        that have gradients, and the values are the gradients for each key.
+
+        Args:
+           self (RateForm): Object pointer.
+           subsDict (dictionary): A dictionary object in which each of the entries are named 
+              after the key to be substituted in the new rate form (i.e., "${Sub1}) and the values
+              for each entry are user-defined values for substitution of the keys.
+
+        Returns (dictionary):
+           A dictionary object with the user-defined gradients for each rate form key that
+           has a defined gradient. Key-substituted values are printed rather than the template.
+           
         """
 
         # Define an empty dictionary to populate and return with gradient information #
         retDict = dict()
 
-        # Iterate through 
+        # Iterate through the previously-set gradient dictionary and extract out paired items #
+        # "key" and "val" for each entry. Then, using the substitute method in the string.template #
+        # class, substitute the $-based keys to the user-defined values #
         for key,val in self.__gradDict.items():
             retDict[key.substitute(subsDict)] = val.substitute(subsDict)
-        
+
+        # Return the newly created dictionary of gradients defined for each key value #
         return retDict
 
 
