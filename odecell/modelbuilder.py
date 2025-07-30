@@ -114,7 +114,7 @@ class RateForm():
            other (RateForm): Another object of class RateForm to compare to the present object.
 
         Returns (boolean):
-           True if "self" and "other" have the same __dict__ attributes.
+           True if "self" and "other" have the same __dict__ attributes, otherwise False.
            
         """
         return self.__dict__ == other.__dict__
@@ -156,9 +156,7 @@ class RateForm():
         """
         return self.__baseRateTemplate.substitute(subsDict)
     
-    ## Returns .
-    # 
-    # @param self The object pointer.
+    
     ### Defining Class getKeys Method ###
     def getKeys(self):
         """
@@ -185,6 +183,21 @@ class RateForm():
 
         This method populates the "__gradDict" attribute with information on the partial
         derivatives for each key variable in the new rate form.
+
+        Args:
+           self (RateForm): Object pointer.
+           key (string): The variable in the new rate form for which the user is specifying 
+              the gradient component. 
+              For example, if the new rate form is "${Vmax} * ${Sub1} /(${Km} + ${Sub1})",
+              and the user wants to specify the gradient with respect to "Sub1", this argument 
+              is simply "${Sub1}".
+           form (string): The gradient or partial derivative (in $-based syntax) for the 
+              key specified above. For example, if the new rate form is "",
+              this argument should be "${Vmax}/(${Km} + ${Sub1}) - ${Vmax}/((${Km} + ${Sub1})**2)"
+              
+        Returns:
+           none
+           
         """
         self.__gradDict[Template(key)] = Template(form)
     
