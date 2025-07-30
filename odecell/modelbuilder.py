@@ -35,11 +35,18 @@ class RateForm():
     to form a kinetic model. This class is used in the creation of the MetabolicModel
     class which is defined below.
 
+    Initialization Parameters:
+       myObject = odecell.modelbuilder.RateForm(newbase = "${Vmax} * ${Sub1} /(${Km} + ${Sub1})"):
+          newbase (string or RateForm): If string, it must be the template string 
+                defining the form of the new type of rate. If another rate
+                form object, its template string will be copied to the current object.
+                This is set to be the Michaelis-Menten equation by default.
+
     Attributes:
        __baseRateTemplate (string.Template): This is an internal attribute that is 
-          defined at initialization. It is of the string.Template class and holds the 
-          new rate form in a format which is a secure way to perform string substitutions 
-          using a $-based syntax.
+          defined at initialization from the "newbase" argument. It is of the 
+          string.Template class and holds the new rate form in a format which is a 
+          secure way to perform string substitutions using a $-based syntax.
        __keySet (set): This is an internal attribute that is "defined" (empty) at initialization.
           It is a set that contains all the user-defined "keys" (i.e., variable names in 
           the rate form such as "$Vmax", "$Sub1", etc. that are later defined by the user).
@@ -251,16 +258,25 @@ class Metabolite():
     This class allows one to define a new metabolite along with the metabolite metadata.
     Meta-data includes the metabolite name, ID, FBAID, mode, participating reactions, dependent
     metabolites, initial abundance, current abundance, FBA fluxes, and FBA connections.
-    
-    Attributes:
-       __ID(string): dfdf
-       __FBAID(string): dfdf
-       __name(string):
-       __initValue(float):
-       __currValue(float):
-       __mode(string):?
-       
 
+    Initialization Parameters:
+       myObject = odecell.modelbuilder.Metabolite(metID, metName = "", initVal = 0, fbaMetID = "", metMode=""):
+          metID (string): REQUIRED, a string representing the shortened version of the metabolite
+             name. For example, "Glc" for the metabolite glucose.
+          metName (string): 
+                
+    Attributes:
+       __ID (string): dfdf
+       __FBAID (string): dfdf
+       __name (string):
+       __initValue (float):
+       __currValue (float):
+       __mode (string):?
+       __rxnSet ():
+       __connRxns ():
+       __connFlux ():
+       __dependentMets ():
+       
     Methods: 
        __init__(self, ): 
        __str__(self, ): 
