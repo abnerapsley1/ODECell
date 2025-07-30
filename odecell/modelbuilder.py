@@ -34,7 +34,10 @@ class RateForm():
     class which is defined below.
 
     Attributes:
-       Attribute1 (): 
+       __baseRateTemplate (string.Template): This is an internal attribute that is 
+          defined at initialization. It is of the string.Template class and holds the 
+          new rate form in a format which is a secure way to perform string substitutions 
+          using a $-based syntax.
 
     Methods: 
        Method1: 
@@ -53,15 +56,20 @@ class RateForm():
             newbase (str or RateForm): If string, it must be the template string 
                 defining the form of the new type of rate. If another rate
                 form object, its template string will be copied to the current object.
+                This is set to be the Michaelis-Menten equation by default.
+                
         Returns:
             none
         
         """
 
-        # Test whether 
+        # Test whether the argument "newbase" is a string or a RateForm class object #
+        # If the argument is a RateForm, newbase is defined as the output from the  
+        # RateForm.getBaseRate() method. #
         if isinstance(newbase, RateForm):
             newbase = newbase.getBaseRate()
-        
+
+        # 
         self.__baseRateTemplate = Template(newbase)
         
         self.__keySet = set()
