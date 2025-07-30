@@ -245,6 +245,48 @@ class RateForm():
 ### Constructing Metabolite Class ###
 #####################################
 class Metabolite():
+    """
+    This class is the base class for defining metabolites.
+
+    This class allows one to define a new metabolite along with the metabolite metadata.
+    Meta-data includes the metabolite name, ID, FBAID, mode, participating reactions, dependent
+    metabolites, initial abundance, current abundance, FBA fluxes, and FBA connections.
+    
+    Attributes:
+       __ID(string): dfdf
+       __FBAID(string): dfdf
+       __name(string):
+       __initValue(float):
+       __currValue(float):
+       __mode(string):?
+       
+
+    Methods: 
+       __init__(self, ): 
+       __str__(self, ): 
+       getName(self, ):
+       getID(self, ):
+       getFBAID(self, ):
+       setMode(self, ):
+       getMode(self, ):
+       addReaction(self, ):
+       rmReaction(self, ):
+       getReactions(self, ):
+       addDependMet(self, ):
+       getDependMets(self, ):
+       getInitValue(self, ):
+       getCurrValue(self, ):
+       setInitValue(self, ):
+       setCurrValue(self, ):
+       setConnFlux(self, ):
+       getConnFlux(self, ):
+       cleanConnections(self, ):
+       addFBAConnection(self, ):
+       getConnRxns(self, ):
+       calcConFlux(self, ):
+       
+          
+    """
     
     ## Constructor for class Metabolite
     #
