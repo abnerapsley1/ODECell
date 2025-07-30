@@ -38,6 +38,12 @@ class RateForm():
           defined at initialization. It is of the string.Template class and holds the 
           new rate form in a format which is a secure way to perform string substitutions 
           using a $-based syntax.
+       __keySet (set): This is an internal attribute that is "defined" (empty) at initialization.
+          It is a set that contains all the user-defined "keys" (i.e., variable names in 
+          the rate form such as "$Vmax", "$Sub1", etc. that are later defined by the user).
+       __gradDict (dictionary): This is an internal attribute that is "defined" (empty)
+          at initialization. This dictionary stores the differentiated rate form with respect
+          to its keys.
 
     Methods: 
        Method1: 
@@ -53,7 +59,7 @@ class RateForm():
         set containing all keys in the rate form.
         
         Args:
-            newbase (str or RateForm): If string, it must be the template string 
+            newbase (string or RateForm): If string, it must be the template string 
                 defining the form of the new type of rate. If another rate
                 form object, its template string will be copied to the current object.
                 This is set to be the Michaelis-Menten equation by default.
@@ -69,15 +75,17 @@ class RateForm():
         if isinstance(newbase, RateForm):
             newbase = newbase.getBaseRate()
 
-        # 
+        # Define the __baseRateTemplate attribute as a string.Template object #
         self.__baseRateTemplate = Template(newbase)
-        
+
+        # Define the __keySet attribute as an empty set #
         self.__keySet = set()
         
-        ## Gradient dictionary. Stores the differentiated form with respect 
-        ## to its keys.
+        # Define the __gradDict (gradient dictionary) attribute as an empty dictionary # 
         self.__gradDict = dict()
-        
+
+        # Itterate through all user-defined keys in the new rate form and add these values #
+        # to the RateForm class "__keySet" attribute set.
         for item in Template.pattern.findall(newbase):
             self.__keySet.add(item[1] + item[2])
     
