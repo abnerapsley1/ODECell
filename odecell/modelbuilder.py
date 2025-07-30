@@ -200,34 +200,24 @@ class RateForm():
            
         """
         self.__gradDict[Template(key)] = Template(form)
-    
+
+    ### Define Class getGradDict Method ###
     def getGradDict(self, subsDict):
-        
+        """
+        Gets the gradients for each key species in the new rate form.
+
+        This method 
+        """
+
+        # Define an empty dictionary to populate and return with gradient information #
         retDict = dict()
-        
+
+        # Iterate through 
         for key,val in self.__gradDict.items():
             retDict[key.substitute(subsDict)] = val.substitute(subsDict)
         
         return retDict
-    
-    ## Another solution could be to have Closures. Substitute 
-    ## the parameters for the values of a particular reaction, and leave
-    ## the concentrations as function parameters. This function would then
-    ## return a pair: the function and a list of indexes for the "y" list
-    ## with concentrations that comes from the solver.
-    ## The __call__ would then iterate over a a list of lambdas, calling 
-    ## them with their respective metabolite concentrations (determined 
-    ## using their index-vectors), and storing all results
-    ## in a list, wich would be used in another loop to determine the deltas
-    ## for each metabolite.
-    ## 
-    ##    def newFunc(par1,par2):
-    ##        def finalFunc(x,y): 
-    ##            return par1*x/(par1 + y/par2)
-    ##        return finalFunc
-    ##    
-    ##    func(*shortConcentrationsList)
-    
+
 
 #####################################
 ### Constructing Metabolite Class ###
