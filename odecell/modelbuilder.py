@@ -548,6 +548,21 @@ class Metabolite():
 
     ### Define Class addDependMet Method ###
     def addDependMet(self, met):
+        """
+        Adds a dependent metabolite to the present metabolite object.
+
+        This method appends the __dependentMets attribute by adding an additional metabolite
+        that is dependent with the new metabolite.
+
+        Args:
+            self (Metabolite): Object pointer.
+            met (string): REQUIRED, a string specifying the reaction ID to associate
+                with the new metabolite (see Class Reaction for details on this parameter).
+
+        Returns:
+            none
+            
+        """
         return self.__dependentMets.add(met)
 
     ### Define Class getDependMets Method ###
@@ -601,14 +616,56 @@ class Metabolite():
 
     ### Define Class setInitVal Method ###
     def setInitVal(self, newVal):
+        """
+        Sets the initial abundance of the metabolite object.
+
+        This method defines the __initVal attribute for a metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+            newVal (float): REQUIRED, a number specifying the initial abundance 
+                of the metabolite object.
+
+        Returns:
+            none
+            
+        """
         self.__initVal = newVal
 
     ### Define Class setCurrVal Method ###
     def setCurrVal(self, newVal):
+        """
+        Sets the current abundance of the metabolite object.
+
+        This method defines the __currVal attribute for a metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+            newVal (string): REQUIRED, a number specifying the curent abundance
+                of the metabolite object.
+
+        Returns:
+            none
+            
+        """
         self.__currVal = newVal
 
     ### Define Class setConnFlux Method ###
     def setConnFlux(self, newFlux):
+        """
+        Sets the FBA connection fluxes of the metabolite object.
+
+        This method defines the __connFlux attribute for a metabolite object.
+
+        Args:
+            self (Metabolite): Object pointer.
+            newFlux (float): REQUIRED, a number indicating the FBA fluxes of
+                the metabolite object.
+
+        Returns:
+            none
+            
+        """
         self.__connFlux = newFlux
 
     ### Define Class getConnFlux Method ###
@@ -629,15 +686,40 @@ class Metabolite():
 
     ### Define Class clearConnections Method ###
     def cleanConnections(self):
+        """
+        Removes the FBA connections of the metabolite object.
+
+        This method redefines the __connRxns attribute for a metabolite object
+            to be an empty list.
+
+        Args:
+            self (Metabolite): Object pointer.
+            
+        Returns:
+            none
+            
+        """
         self.__connRxns = []
     
-    ## Add reaction index and the stoichiometry for this metabolite
-    #
-    # @param self The object pointer.
-    # @param rxnIndx The index for the connecting reaction,
-    # @param rxnStoich The stoichiometry for this metabolite in the reaction.
     ### Define Class addFBAConnection Method ###
     def addFBAConnection(self, rxnIndx, rxnStoich):
+        """
+        Adds an FBA reaction and its stoichiometry for the metabolite object.
+
+        This method appends the __connRxns attribute for a metabolite object by
+            adding an FBA reaction (reaction index) and associated stoichiometry.
+
+        Args:
+            self (Metabolite): Object pointer.
+            rxnIndx (string): REQUIRED, a string specifying the reaction index
+                for the new FBA connection.
+            rxnStoich (float): REQUIRED, a number specifying the stoichiometry in 
+                the FBA reaction for the given metabolite.
+
+        Returns (integer):
+            The integer 0.
+            
+        """
         self.__connRxns.append( (rxnIndx, rxnStoich) )
         return(0)
 
@@ -658,17 +740,35 @@ class Metabolite():
         return self.__connRxns
 
     ### Define Class calcConnFlux Method ###
-    def calcConnFlux(self, fbsSolution, fbamodel=0):
-        
+    def calcConnFlux(self, fbaSolution, fbamodel=0):
+        """
+        Calculates the FBA connection fluxes for the metabolite object.
+
+        This method takes as input an FBA model solution and the general
+        FBA model architecture and saves the flux solution to the __connFlux
+        attribute. This function takes into account the stoichiometry of
+        the given metabolite.
+
+        Args:
+            self (Metabolite): Object pointer.
+            fbaSolution (???):
+            fbamodel (???):
+
+        Returns (integer):
+            The integer 0.
+            
+        """
+
+        # Set the __connFlux attribute to 0 #
         self.__connFlux = 0
         
         if fbamodel != 0:
             print("Connecting fluxes for metabolite:",self.__ID)
         
         for connRxn in self.__connRxns:
-            if fbamodel != 0 and fbsSolution.x[connRxn[0]] != 0:
-                print(connRxn[0], fbamodel.reactions[connRxn[0]].id, fbsSolution.x[connRxn[0]], connRxn[1])
-            self.__connFlux += connRxn[1]*fbsSolution.x[connRxn[0]]
+            if fbamodel != 0 and fbaSolution.x[connRxn[0]] != 0:
+                print(connRxn[0], fbamodel.reactions[connRxn[0]].id, fbaSolution.x[connRxn[0]], connRxn[1])
+            self.__connFlux += connRxn[1]*fbaSolution.x[connRxn[0]]
         
         return(0)
 
