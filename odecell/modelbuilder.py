@@ -305,21 +305,31 @@ class Metabolite():
         __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): A dunder method that 
             initializes the instance of the class object.
         __str__(self): A dunder method that defines the Metabolite class "str()" behavior.
-        getName(self): A method to return the metabolite object __name attribute.
-        getID(self): A method to return the metabolite object __ID attribute.
-        getFBAID(self): A method to return the metabolite object __FBAID attribute.
-        setMode(self, newMode): A method to define the metabolite object's __mode attribute.
-        getMode(self, ): A method to return the metabolite object __mode attribute.
-        addReaction(self, ):
-        rmReaction(self, ):
-        getReactions(self, ):
-        addDependMet(self, ):
-        getDependMets(self, ):
-        getInitValue(self, ):
-        getCurrValue(self, ):
-        setInitValue(self, ):
-        setCurrValue(self, ):
-        setConnFlux(self, ):
+        getName(self): A method to return the metabolite object name (__name attribute).
+        getID(self): A method to return the metabolite object ID (__ID attribute).
+        getFBAID(self): A method to return the FBA ID of the metabolite object 
+            (__FBAID attribute).
+        setMode(self, newMode): A method to define the metabolite object's mode (__mode attribute).
+        getMode(self, ): A method to return the metabolite object's mode (__mode attribute).
+        addReaction(self, rxnIndx): A method to add a reaction to the metabolite object 
+            (__rxnSet attribute).
+        rmReaction(self, rxnIndx): A method to remove a reaction from the metabolite object
+            (__rxnSet attribute).
+        getReactions(self): A method to return the reactions in which the metabolite
+            object participates (__rxnSet attribute).
+        addDependMet(self, met): A method to add a dependent metabolite to the 
+            metabolite object (__dependentMets attribute).
+        getDependMets(self): A method to return the dependent metabolites of the given 
+            metabolite object (__dependentMets attribute).
+        getInitValue(self): A method to return the initial abundance of the metabolite object
+            (__initVal attribute).
+        getCurrValue(self): A method to return the current abundance of the metabolite object
+            (__currVal attribute).
+        setInitValue(self, newVal): A method to define the initial abundance of the metabolite
+            object (__initVal attribute).
+        setCurrValue(self, newVal): A method to define the current abundance of the metabolite
+            object (__currVal attribute).
+        setConnFlux(self, newFlux): A method to define the 
         getConnFlux(self, ):
         cleanConnections(self, ):
         addFBAConnection(self, ):
