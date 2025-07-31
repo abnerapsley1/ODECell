@@ -894,36 +894,53 @@ class Reaction():
     # @param rxnName The name string for this reaction.
     ### Define Class __init__ Method ###
     def __init__(self,rxnID, rxnName):
-        self.__ID = rxnID
-        self.__name = rxnName
+         """
+        Initializer method for the Reaction class.
         
-        # formKey VS IDs
+        Defines a reaction which can be used in metabolic models.
+        
+        Args:
+            self (Reaction): Object pointer.
+            rxnID (string): REQUIRED, a string representing the shortened version of the reaction
+                name. For example, "GlcTrans" for the glucose transport reaction.
+            rxnName (string): REQUIRED, the full reaction name. For example "glucose transport".
+                
+        Returns:
+            none
+        
+        """
+        
+        # Define __ID attribute as rxnID parameter #
+        self.__ID = rxnID
+        # Define __name attribute as rxnName parameter #
+        self.__name = rxnName
+        # Define __substrates attribute as an empty dictionary #
         self.__substrates = {}
-        # formKey VS IDs
+        # Define __products attribute as an empty dictionary #
         self.__products = {}
-        # formKey VS value
+        # Define __parameters attribute as an empty dictionary #
         self.__parameters = {}
-        # Reaction rate form
+        # Define __rateForm attribute as 0 #
         self.__rateForm = 0
-        # Rate form name
+        # Define __rateFormName attribute as an empty string #
         self.__rateFormName = ""
-        # Result to be placed at the LHS of the final equation.
+        # Define __result attribute as 0 #
         self.__result = 0
         # Reaction number used to construct a "__result" when one is not 
         # supplied by the user during model construction.
+        # Define __number attribute as 0 #
         self.__number = 0
-        # Equivalent reaction(s) in the FBA model.
-        # The ODE flux will be imposed on these reactions
-        # in a hybrid ODE/FBA simulation.
+        # Define __fbaEquivRxnsSet attribute as an empty set #
         self.__fbaEquivRxnsSet = set()
-        
+        # Define __stoich attribute as an empty dictionary #
         self.__stoich = dict()
-        
+        # Define __dependentRxnsIndxs attribute as an empty set #
         self.__dependentRxnsIndxs = set()
+        # Define __depKeysVals attribute as an empty dictionary #
         self.__depKeysVals = dict()
-        
-        # Indicates wether this reaction should be checked for presence of
-        # Substrate(s) and Product(s).
+        # Define __checkReaction attribute as True #
+        # Indicates wether this reaction should be checked for presence of #
+        # substrate(s) and product(s). #
         self.__checkReaction = True
 
     ### Define Class __str__ Method ###
