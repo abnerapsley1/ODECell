@@ -751,8 +751,10 @@ class Metabolite():
 
         Args:
             self (Metabolite): Object pointer.
-            fbaSolution (???):
-            fbamodel (???):
+            fbaSolution (???): REQUIRED, the solution object for the FBA model which includes
+                the given metabolite object.
+            fbamodel (???): The architecture object for the FBA model which includes
+                the given metabolite object.
 
         Returns (integer):
             The integer 0.
@@ -761,13 +763,20 @@ class Metabolite():
 
         # Set the __connFlux attribute to 0 #
         self.__connFlux = 0
-        
+
+        # Test whether an fbamodel was included as an argument and if so, print initial message #
         if fbamodel != 0:
             print("Connecting fluxes for metabolite:",self.__ID)
-        
+
+        # Iterate through the items in the __connRxns attribute #
         for connRxn in self.__connRxns:
+            # Test if fbamodel was input as an argument and whether there is a non-zero #
+            # solution for the given metabolite in the fbaSolution input object #
             if fbamodel != 0 and fbaSolution.x[connRxn[0]] != 0:
+                # Print message with FBA reaction and flux information #
                 print(connRxn[0], fbamodel.reactions[connRxn[0]].id, fbaSolution.x[connRxn[0]], connRxn[1])
+            # Add the specified reaction flux to the overall flux of the metabolite object #
+            # This accounts for the FBA stoichiometry of the given metabolite #
             self.__connFlux += connRxn[1]*fbaSolution.x[connRxn[0]]
         
         return(0)
