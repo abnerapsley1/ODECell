@@ -816,11 +816,16 @@ class Reaction():
             rxnName (string): REQUIRED, the full name of the new reaction object.
 
     Attributes:
-        __ID (string):
-        __name (string):
-        __substrates (dictionary):
-        __products (dictionary):
-        __parameters (dictionary):
+        __ID (string): This is an internal attribute that defines the ID for the reaction
+            object. The Reaction ID is usually a shortened version of the reaction name.
+        __name (string): This is an internal attribute that defines the full name for
+            the reaction object.
+        __substrates (dictionary): This is an internal attribute that defines the
+            metabolite species that are substrates in the reaction object.
+        __products (dictionary): This is an internal attribute that defines the
+            metabolite species that are products in the reaction object.
+        __parameters (dictionary): This is an internal attribute that defines the
+            parameter values that are used in the rate form of the reaction object.
         __rateForm (integer): This is an internal attribute that defines the rate form 
             for the reaction object.
         __rateFormName (string): This is an internal attribute that defines the name 
@@ -842,7 +847,7 @@ class Reaction():
     Methods: 
         __init__(self, rxnID, rxnName): A dunder method that 
             initializes the instance of the class object.
-        __str__(self): A dunder method that defines the Metabolite class "str()" behavior.
+        __str__(self): A dunder method that defines the Reaction class "str()" behavior.
         getID(self):
         getName(self):
         setRateForm(self, newRateForm, newRrateFormName):
@@ -887,6 +892,7 @@ class Reaction():
     # @param self The object pointer.
     # @param rxnID The ID string for this reaction.
     # @param rxnName The name string for this reaction.
+    ### Define Class __init__ Method ###
     def __init__(self,rxnID, rxnName):
         self.__ID = rxnID
         self.__name = rxnName
@@ -919,7 +925,8 @@ class Reaction():
         # Indicates wether this reaction should be checked for presence of
         # Substrate(s) and Product(s).
         self.__checkReaction = True
-        
+
+    ### Define Class __str__ Method ###
     def __str__(self):
         returnStr = self.__ID + ": " + self.__name + "\n"
         returnStr += "Reaction Index: " + str(self.__number) + "\n"
@@ -950,13 +957,16 @@ class Reaction():
         else:
             returnStr += "All keys are bound."
         return returnStr
-    
+
+    ### Define Class getID Method ###
     def getID(self):
         return self.__ID
-    
+
+    ### Define Class getName Method ###
     def getName(self):
         return self.__name
-    
+
+    ### Define Class setRateForm Method ###
     def setRateForm(self, newRateForm, newRrateFormName):
         self.__rateForm = newRateForm
         self.__rateFormName = newRrateFormName
@@ -965,12 +975,14 @@ class Reaction():
     ## Returns the set of keys for the rate form.
     # 
     # @param self The object pointer.
+    ### Define Class getKeys Method ###
     def getKeys(self):
         return self.__rateForm.getKeys()
     
     ## Returns the set of unbound keys in the reaction object.
     # 
     # @param self The object pointer.
+    ### Define Class getUnboundKeys Method ###
     def getUnboundKeys(self):
         
         definedKeys = set(self.__substrates.keys())
@@ -983,21 +995,26 @@ class Reaction():
     ## Returns the rate form name.
     # 
     # @param self The object pointer.
+    ### Define Class getRateFormName Method ###
     def getRateFormName(self):
         return self.__rateFormName
     
     ## Returns the base rate form.
     #
     # @param self The object pointer.
+    ### Define Class getBaseRateForm Method ###
     def getBaseRateForm(self):
         return self.__rateForm.getBaseRate()
-    
+
+    ### Define Class getSubstrates Method ###
     def getSubstrates(self):
         return self.__substrates.values()
-    
+
+    ### Define Class getProducts Method ###
     def getProducts(self):
         return self.__products.values()
-    
+
+    ### Define Class setResult Method ###
     def setResult(self, newRes):
         """ Sets a fixed known variable name for the result (LHS) of the reaction.
         
@@ -1013,10 +1030,12 @@ class Reaction():
         
         self.__result = newRes
         self.__number = 0
-    
+
+    ### Define Class getResult Method ###
     def getResult(self):
         return self.__result
-    
+
+    ### Define Class getStoichiometry Method ###
     def getStoichiometry(self, metID):
         
         stoic = 0
@@ -1029,21 +1048,25 @@ class Reaction():
             stoic = prodStoic - subStoic
             
         return stoic
-    
+
+    ### Define Class getKeysVals Method ###
     def getKeysVals(self):
         finalDict = deepcopy(self.__substrates)
         finalDict.update(self.__products)
         finalDict.update(self.__parameters)
         
         return finalDict
-    
+
+    ### Define Class addDepKeysVals Method ###
     def addDepKeysVals(self, depKeysValsDict):
         self.__depKeysVals.update(depKeysValsDict)
-    
+
+    ### Define Class getDependentKeysVals Method ###
     def getDependentKeysVals(self):
         
         return self.__depKeysVals
-    
+
+    ### Define Class getRHS Method ###
     def getRHS(self):
         """ Returns a strign with the RHS of the reaction equation.
         
@@ -1061,7 +1084,8 @@ class Reaction():
         """
         
         return self.__rateForm.getRate(self.getKeysVals())
-        
+
+    ### Define Class getFinalRate Method ###
     def getFinalRate(self, prefix = "V"):
         """ Returns a strign with the final rate law for the reaction.
         
@@ -1092,7 +1116,8 @@ class Reaction():
             finalResult = self.__result
         
         return finalResult + " = " + self.getRHS()
-    
+
+    ### Define Class getGrad Method ###
     def getGrad(self):
         """ Returns the diferentiated forms of this reaction.
         
@@ -1110,25 +1135,32 @@ class Reaction():
         unionDic.update(self.getDependentKeysVals())
         
         return [ (key,val) for key,val in self.__rateForm.getGradDict(unionDic).items() ]
-    
+
+    ### Define Class setNumber Method ###
     def setNumber(self, newNumber):
         self.__number = newNumber
-    
+
+    ### Define Class getNumber Method ###
     def getNumber(self):
         return self.__number
-    
+
+    ### Define Class setCheckRxn Method ###
     def setCheckRxn(self, newCheckRxn):
         self.__checkReaction = newCheckRxn
-    
+
+    ### Define Class getCheckRxn Method ###
     def getCheckRxn(self):
         return self.__checkReaction
-    
+
+    ### Define Class isSubstrate Method ###
     def isSubstrate(self, metID):
         return metID in self.__substrates.values()
-    
+
+    ### Define Class isProduct Method ###
     def isProduct(self, metID):
         return metID in self.__products.values()
-    
+
+    ### Define Class addSubstrate Method ###
     def addSubstrate(self, rxnFormKey, metID, stoich=0):
         """ Add a substrate to the reaction.
         
@@ -1163,7 +1195,8 @@ class Reaction():
         
         if stoich != 0:
             self.__stoich[metID] = stoich
-    
+
+    ### Define Class addProduct Method ###
     def addProduct(self, rxnFormKey, metID, stoich=0):
         
         if rxnFormKey in self.__products.keys():
@@ -1183,7 +1216,8 @@ class Reaction():
         
         if stoich != 0:
             self.__stoich[metID] = stoich
-    
+
+    ### Define Class addParameter Method ###
     def addParameter(self, rxnFormKey, value, verbose = 0):
         
         if rxnFormKey in self.__parameters.keys():
@@ -1206,7 +1240,7 @@ class Reaction():
     # The multiplier can be used to change the reaction's
     # direction, in order to match the default direction
     # in the FBA model.
-    # 
+    ### Define Class addFBAEquiv Method ###
     def addFBAEquiv(self, fbaEquiv, multiplier = 1):
         
         if isinstance(fbaEquiv,str):
@@ -1219,13 +1253,16 @@ class Reaction():
             return(0)
         else :
             return(1)
-    
+
+    ### Define Class getFBAEquiv Method ###
     def getFBAEquiv(self):
         return self.__fbaEquivRxnsSet
-    
+
+    ### Define Class cleanFBAEquiv Method ###
     def cleanFBAEquiv(self):
         self.__fbaEquivRxnsSet = set()
-    
+
+    ### Define Class rmSubstrate Method ###
     def rmSubstrate(self, rxnFormKey):
         
         if rxnFormKey not in self.__substrates.keys():
@@ -1238,7 +1275,8 @@ class Reaction():
         del self.__substrates[rxnFormKey]
         
         return returnMetID
-    
+
+    ### Define Class rmProduct Method ###
     def rmProduct(self, rxnFormKey):
         
         if rxnFormKey not in self.__products.keys():
@@ -1251,7 +1289,8 @@ class Reaction():
         del self.__products[rxnFormKey]
         
         return returnMetID
-    
+
+    ### Define Class rmParameter Method ###
     def rmParameter(self, rxnFormKey):
         
         if rxnFormKey not in self.__parameters.keys():
@@ -1262,13 +1301,16 @@ class Reaction():
         del self.__parameters[rxnFormKey]
         
         return 0
-    
+
+    ### Define Class addDependent Method ###
     def addDependent(self, rxnIndx):
         self.__dependentRxnsIndxs.add(rxnIndx)
-    
+
+    ### Define Class getDependentRxns Method ###
     def getDependentRxns(self):
         return self.__dependentRxnsIndxs
-    
+
+    ### Define Class hasMetabolite Method ###
     def hasMetabolite(self, metID):
         return (metID in self.__substrates.values()) or (metID in self.__products.values())
     
