@@ -830,54 +830,56 @@ class Reaction():
         __number (float): This is an internal attribute that defines...???
         __fbaEquivRxnsSet (set): This is an internal attribute that defines a set 
             representing the FBA reaction(s) that are equivalent to the new reaction object.
-        __stoich (dictionary): This is an internal attribute that defines a dictionary defining the stoichiometry coefficients for each 
-            product and reactant in the reaction object.
-        __dependentRxnsIndxs (set):
-        __depKeysVals (dictionary): 
-        __checkReaction (boolean): A boolean value defining whether this reaction should be 
-            checked for the presence of products and reactants.
+        __stoich (dictionary): This is an internal attribute that defines a dictionary of 
+            the stoichiometry coefficients for each product and reactant in the reaction object.
+        __dependentRxnsIndxs (set): This is an internal attribute that defines the dependent 
+            reactions for the reaction object.
+        __depKeysVals (dictionary): This is an internal attribute that defines the dependent 
+            key values for the reaction object.
+        __checkReaction (boolean): This is an internal attribute defining whether this reaction 
+            should be checked for the presence of products and reactants.
 
     Methods: 
-        __init__(self, metID, metName = "", initVal = 0, fbaMetID = "", metMode=""): A dunder method that 
+        __init__(self, rxnID, rxnName): A dunder method that 
             initializes the instance of the class object.
         __str__(self): A dunder method that defines the Metabolite class "str()" behavior.
-        getName(self): A method to return the metabolite object name (__name attribute).
-        getID(self): A method to return the metabolite object ID (__ID attribute).
-        getFBAID(self): A method to return the FBA ID of the metabolite object 
-            (__FBAID attribute).
-        setMode(self, newMode): A method to define the metabolite object's mode (__mode attribute).
-        getMode(self, ): A method to return the metabolite object's mode (__mode attribute).
-        addReaction(self, rxnIndx): A method to add a reaction to the metabolite object 
-            (__rxnSet attribute).
-        rmReaction(self, rxnIndx): A method to remove a reaction from the metabolite object
-            (__rxnSet attribute).
-        getReactions(self): A method to return the reactions in which the metabolite
-            object participates (__rxnSet attribute).
-        addDependMet(self, met): A method to add a dependent metabolite to the 
-            metabolite object (__dependentMets attribute).
-        getDependMets(self): A method to return the dependent metabolites of the given 
-            metabolite object (__dependentMets attribute).
-        getInitValue(self): A method to return the initial abundance of the metabolite object
-            (__initVal attribute).
-        getCurrValue(self): A method to return the current abundance of the metabolite object
-            (__currVal attribute).
-        setInitValue(self, newVal): A method to define the initial abundance of the metabolite
-            object (__initVal attribute).
-        setCurrValue(self, newVal): A method to define the current abundance of the metabolite
-            object (__currVal attribute).
-        setConnFlux(self, newFlux): A method to define the incoming FBA flux of the metabolite
-            object (__connFlux attribute).
-        getConnFlux(self): A method to return the incoming FBA flux of the metabolite
-            object (__connFlux attribute).
-        cleanConnections(self): A method to return the incoming FBA flux of the metabolite
-            object (__connFlux attribute).
-        addFBAConnection(self, rxnIndx, rxnStoich): A method to add an FBA connection for the
-            metabolite object (__connRxns attribute)
-        getConnRxns(self): A method to return all FBA connections for the metabolite object
-            (__connRxns attribute).
-        calcConFlux(self, fbaSolution, fbamodel=0): A method to save the results (total metabolic 
-            flux) from an FBA model solution in the metabolite object's __connFlux attribute.
-
+        getID(self):
+        getName(self):
+        setRateForm(self, newRateForm, newRrateFormName):
+        getKeys(self):
+        getUnboundKeys(self):
+        getRateFormName(self):
+        getBaseRateForm(self):
+        getSubstrates(self):
+        getProducts(self):
+        setResult(self, newRes):
+        getResult(self):
+        getStoichiometry(self, metID):
+        getKeysVals(self):
+        addDepKeysVals(self, depKeysValsDict):
+        getDependentKeysVals(self):
+        getRHS(self):
+        getFinalRate(self, prefix = "V"):
+        getGrad(self):
+        setNumber(self, newNumber):
+        getNumber(self):
+        setCheckRxn(self, newCheckRxn):
+        getCheckRxn(self):
+        isSubstrate(self, metID):
+        isProduct(self, metID):
+        addSubstrate(self, rxnFormKey, metID, stoich=0):
+        addProduct(self, rxnFormKey, metID, stoich=0):
+        addParameter(self, rxnFormKey, value, verbose = 0):
+        addFBAEquiv(self, fbaEquiv, multiplier = 1):
+        getFBAEquiv(self):
+        cleanFBAEquiv(self):
+        rmSubstrate(self, rxnFormKey):
+        rmProduct(self, rxnFormKey):
+        rmParameter(self, rxnFormKey):
+        addDependent(self, rxnIndx):
+        getDependentRxns(self):
+        hasMetabolite(self, metID):
+        
     """
     
     ## Constructor for class Reaction
