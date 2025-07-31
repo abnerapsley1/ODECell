@@ -329,12 +329,18 @@ class Metabolite():
             object (__initVal attribute).
         setCurrValue(self, newVal): A method to define the current abundance of the metabolite
             object (__currVal attribute).
-        setConnFlux(self, newFlux): A method to define the 
-        getConnFlux(self, ):
-        cleanConnections(self, ):
-        addFBAConnection(self, ):
-        getConnRxns(self, ):
-        calcConFlux(self, ):
+        setConnFlux(self, newFlux): A method to define the incoming FBA flux of the metabolite
+            object (__connFlux attribute).
+        getConnFlux(self): A method to return the incoming FBA flux of the metabolite
+            object (__connFlux attribute).
+        cleanConnections(self): A method to return the incoming FBA flux of the metabolite
+            object (__connFlux attribute).
+        addFBAConnection(self, rxnIndx, rxnStoich): A method to add an FBA connection for the
+            metabolite object (__connRxns attribute)
+        getConnRxns(self): A method to return all FBA connections for the metabolite object
+            (__connRxns attribute).
+        calcConFlux(self, fbaSolution, fbamodel=0): A method to save the results (total metabolic 
+            flux) from an FBA model solution in the metabolite object's __connFlux attribute.
        
     """
 
